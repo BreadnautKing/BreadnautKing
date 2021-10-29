@@ -1,16 +1,15 @@
 ### Hi there 👋
 
-<!--
-**BreadnautKing/BreadnautKing** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+My name is Anton. I'm 22 years old and I'm studying Game Design, Unreal Engine 4 and Unity Development at Skillbox.
+Right now I'm working on my first game called "The Legend of Savannah".
 
-Here are some ideas to get you started:
+My professional skills:
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+1. Game product concept development
+2. Setting the task and evaluating the work of game scriptwriters
+3. Designing game levels and mechanics
+4. Analysis and comparison of various game balance models
+5. Analysis and development of the level balance
+6. Development of technical specifications for programmers
+7. Development of a promotion strategy and withdrawal of a gaming product
+8. Preparation of technical documentation for gaming products
