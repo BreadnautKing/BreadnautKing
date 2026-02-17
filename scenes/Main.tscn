@@ -1,0 +1,143 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/Zombie.tscn" id="2_zombie"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="3_main"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_terrain"]
+size = Vector2(1200, 1200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_terrain_collision"]
+size = Vector3(1200, 2, 1200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_terrain"]
+albedo_color = Color(0.17, 0.22, 0.17, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_road"]
+albedo_color = Color(0.15, 0.15, 0.16, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_road"]
+size = Vector3(360, 0.2, 28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_building"]
+size = Vector3(16, 18, 16)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_building"]
+albedo_color = Color(0.35, 0.35, 0.39, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_building"]
+size = Vector3(16, 18, 16)
+
+[sub_resource type="Environment" id="Environment_fog"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.06, 1)
+fog_enabled = true
+fog_light_energy = 0.8
+fog_density = 0.0007
+
+[node name="Main" type="Node3D"]
+script = ExtResource("3_main")
+zombie_scene = ExtResource("2_zombie")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fog")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.8, 0.5, 0.2)
+light_energy = 1.35
+shadow_enabled = true
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+position = Vector3(0, -1, 0)
+shape = SubResource("BoxShape3D_terrain_collision")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain"]
+mesh = SubResource("PlaneMesh_terrain")
+material_override = SubResource("StandardMaterial3D_terrain")
+
+[node name="Road" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.05, 0)
+mesh = SubResource("BoxMesh_road")
+material_override = SubResource("StandardMaterial3D_road")
+
+[node name="RoadCross" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.05, 0)
+rotation = Vector3(0, 1.5708, 0)
+mesh = SubResource("BoxMesh_road")
+material_override = SubResource("StandardMaterial3D_road")
+
+[node name="POI" type="Node3D" parent="."]
+
+[node name="Supermarket" type="Node3D" parent="POI"]
+position = Vector3(80, 0, 110)
+
+[node name="Hospital" type="Node3D" parent="POI"]
+position = Vector3(-190, 0, 70)
+
+[node name="PoliceStation" type="Node3D" parent="POI"]
+position = Vector3(145, 0, -160)
+
+[node name="IndustrialZone" type="Node3D" parent="POI"]
+position = Vector3(-230, 0, -210)
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="BuildingA" type="StaticBody3D" parent="Buildings"]
+position = Vector3(80, 9, 110)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/BuildingA"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/BuildingA"]
+mesh = SubResource("BoxMesh_building")
+material_override = SubResource("StandardMaterial3D_building")
+
+[node name="BuildingB" type="StaticBody3D" parent="Buildings"]
+position = Vector3(-190, 9, 70)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/BuildingB"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/BuildingB"]
+mesh = SubResource("BoxMesh_building")
+material_override = SubResource("StandardMaterial3D_building")
+
+[node name="BuildingC" type="StaticBody3D" parent="Buildings"]
+position = Vector3(145, 9, -160)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/BuildingC"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/BuildingC"]
+mesh = SubResource("BoxMesh_building")
+material_override = SubResource("StandardMaterial3D_building")
+
+[node name="BuildingD" type="StaticBody3D" parent="Buildings"]
+position = Vector3(-230, 9, -210)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/BuildingD"]
+shape = SubResource("BoxShape3D_building")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings/BuildingD"]
+mesh = SubResource("BoxMesh_building")
+material_override = SubResource("StandardMaterial3D_building")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector3(0, 0.5, 0)
+
+[node name="Zombies" type="Node3D" parent="."]
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Hint" type="Label" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 1200.0
+offset_bottom = 110.0
+text = "OPEN WORLD PROTOTYPE: готовая большая карта + POI. WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар"
