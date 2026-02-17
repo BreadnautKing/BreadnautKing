@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/Zombie.tscn" id="2_zombie"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="3_main"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="4_hud"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_terrain"]
 size = Vector2(1200, 1200)
@@ -135,9 +136,74 @@ autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Hint" type="Label" parent="CanvasLayer"]
+[node name="HUD" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_hud")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/HUD"]
 offset_left = 16.0
-offset_top = 12.0
-offset_right = 1200.0
-offset_bottom = 110.0
-text = "OPEN WORLD PROTOTYPE: готовая большая карта + POI. WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар"
+offset_top = 16.0
+offset_right = 330.0
+offset_bottom = 170.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD/PanelContainer"]
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HUD/PanelContainer/MarginContainer"]
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+text = "Level 1"
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="ValueLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer/HealthBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 158.0
+offset_bottom = 18.0
+text = "HP: 100 / 100"
+
+[node name="StaminaBar" type="ProgressBar" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="ValueLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer/StaminaBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 170.0
+offset_bottom = 18.0
+text = "Stamina: 100 / 100"
+
+[node name="XPBar" type="ProgressBar" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="ValueLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer/XPBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 140.0
+offset_bottom = 18.0
+text = "XP: 0 / 100"
+
+[node name="Hint" type="Label" parent="CanvasLayer/HUD"]
+offset_left = 16.0
+offset_top = 184.0
+offset_right = 1220.0
+offset_bottom = 248.0
+text = "WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар"

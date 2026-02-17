@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export var max_health: int = 55
 @export var contact_damage: int = 8
 @export var attack_interval: float = 1.1
+@export var xp_reward: int = 30
 
 var health: int
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -41,6 +42,8 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: int) -> void:
 	health = max(health - amount, 0)
 	if health <= 0:
+		if _target and _target.has_method("add_experience"):
+			_target.add_experience(xp_reward)
 		queue_free()
 
 func _try_attack() -> void:
