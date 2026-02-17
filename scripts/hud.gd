@@ -12,6 +12,7 @@ extends Control
 @onready var wave_label: Label = $PanelContainer/MarginContainer/VBoxContainer/WaveLabel
 @onready var medkit_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MedkitLabel
 @onready var scrap_label: Label = $PanelContainer/MarginContainer/VBoxContainer/ScrapLabel
+@onready var status_label: Label = $PanelContainer/MarginContainer/VBoxContainer/StatusLabel
 @onready var hint_label: Label = $Hint
 
 func _ready() -> void:
@@ -23,7 +24,7 @@ func _ready() -> void:
 	if main_node and main_node.has_signal("wave_changed"):
 		main_node.wave_changed.connect(_on_wave_changed)
 
-	hint_label.text = "3rd person: мышь — обзор камеры | WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"
+	hint_label.text = "3rd person: мышь — камера | WASD — движение | Shift — бег | ЛКМ — удар | F — аптечка | E — крафт у верстака"
 
 func _on_player_stats_changed(data: Dictionary) -> void:
 	health_bar.max_value = data.max_health
@@ -41,6 +42,11 @@ func _on_player_stats_changed(data: Dictionary) -> void:
 	level_label.text = "Level %d" % data.level
 	medkit_label.text = "Medkits: %d" % data.medkits
 	scrap_label.text = "Scrap: %d" % data.scrap
+
+	if data.status_text != "":
+		status_label.text = data.status_text
+	else:
+		status_label.text = "Статус: в бою"
 
 func _on_wave_changed(current_wave: int, max_alive: int) -> void:
 	wave_label.text = "Wave %d | Max zombies: %d" % [current_wave, max_alive]

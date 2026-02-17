@@ -16,6 +16,7 @@ signal stats_changed(data: Dictionary)
 @export var sprint_stamina_cost_per_sec: float = 18.0
 @export var attack_stamina_cost: float = 22.0
 @export var medkit_heal_amount: int = 45
+@export var medkit_craft_scrap_cost: int = 5
 @export var mouse_sensitivity: float = 0.003
 @export var min_pitch_degrees: float = -55.0
 @export var max_pitch_degrees: float = 65.0
@@ -27,6 +28,8 @@ var current_xp: int = 0
 var xp_to_next_level: int = 100
 var medkits: int = 1
 var scrap: int = 0
+var near_workbench: bool = false
+var status_text: String = ""
 
 var _can_attack: bool = true
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -63,6 +66,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("heal_item"):
 		use_medkit()
+
+	if event.is_action_pressed("interact"):
+		craft_medkit_from_scrap()
 
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -141,6 +147,25 @@ func use_medkit() -> void:
 	health = min(health + medkit_heal_amount, max_health)
 	_emit_stats_changed()
 
+
+func set_near_workbench(value: bool) -> void:
+	near_workbench = value
+	status_text = "Нажми E у верстака: %d scrap -> 1 medkit" % medkit_craft_scrap_cost if near_workbench else ""
+	_emit_stats_changed()
+
+func craft_medkit_from_scrap() -> void:
+	if not near_workbench:
+		return
+	if scrap < medkit_craft_scrap_cost:
+		status_text = "Недостаточно scrap для крафта"
+		_emit_stats_changed()
+		return
+
+	scrap -= medkit_craft_scrap_cost
+	medkits += 1
+	status_text = "Скрафтил 1 аптечку"
+	_emit_stats_changed()
+
 func _attack() -> void:
 	if not _can_attack or stamina < attack_stamina_cost:
 		return
@@ -167,7 +192,9 @@ func get_stats() -> Dictionary:
 		"xp": current_xp,
 		"xp_to_next": xp_to_next_level,
 		"medkits": medkits,
-		"scrap": scrap
+		"scrap": scrap,
+		"near_workbench": near_workbench,
+		"status_text": status_text
 	}
 
 func _emit_stats_changed() -> void:

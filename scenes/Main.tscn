@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/Zombie.tscn" id="2_zombie"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/FastZombie.tscn" id="5_fast_zombie"]
 [ext_resource type="PackedScene" path="res://scenes/TankZombie.tscn" id="6_tank_zombie"]
 [ext_resource type="PackedScene" path="res://scenes/Pickup.tscn" id="7_pickup"]
+[ext_resource type="PackedScene" path="res://scenes/Workbench.tscn" id="8_workbench"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_terrain"]
 size = Vector2(1200, 1200)
@@ -151,6 +152,15 @@ position = Vector3(-212, 0.6, -202)
 item_id = "scrap"
 amount = 2
 
+
+[node name="Workbenches" type="Node3D" parent="."]
+
+[node name="WorkbenchA" parent="Workbenches" instance=ExtResource("8_workbench")]
+position = Vector3(90, 0, 118)
+
+[node name="WorkbenchB" parent="Workbenches" instance=ExtResource("8_workbench")]
+position = Vector3(-200, 0, 60)
+
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector3(0, 0.5, 0)
 
@@ -199,6 +209,9 @@ text = "Medkits: 0"
 [node name="ScrapLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 text = "Scrap: 0"
 
+[node name="StatusLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+text = "Статус: в бою"
+
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 max_value = 100.0
 value = 100.0
@@ -243,4 +256,4 @@ offset_left = 16.0
 offset_top = 274.0
 offset_right = 1220.0
 offset_bottom = 340.0
-text = "3rd person: мышь — обзор камеры | WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"
+text = "3rd person: мышь — камера | WASD — движение | Shift — бег | ЛКМ — удар | F — аптечка | E — крафт у верстака"
