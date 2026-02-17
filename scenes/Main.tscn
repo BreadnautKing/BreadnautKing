@@ -243,4 +243,4 @@ offset_left = 16.0
 offset_top = 274.0
 offset_right = 1220.0
 offset_bottom = 340.0
-text = "WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"
+text = "3rd person: мышь — обзор камеры | WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"

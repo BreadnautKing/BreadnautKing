@@ -16,6 +16,9 @@ signal stats_changed(data: Dictionary)
 @export var sprint_stamina_cost_per_sec: float = 18.0
 @export var attack_stamina_cost: float = 22.0
 @export var medkit_heal_amount: int = 45
+@export var mouse_sensitivity: float = 0.003
+@export var min_pitch_degrees: float = -55.0
+@export var max_pitch_degrees: float = 65.0
 
 var health: int
 var stamina: float
@@ -42,10 +45,18 @@ func _ready() -> void:
 	_emit_stats_changed()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * 0.003)
-		camera_pivot.rotate_x(-event.relative.y * 0.003)
-		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, deg_to_rad(-55), deg_to_rad(65))
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		rotate_y(-event.relative.x * mouse_sensitivity)
+		camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
+		camera_pivot.rotation.x = clamp(
+			camera_pivot.rotation.x,
+			deg_to_rad(min_pitch_degrees),
+			deg_to_rad(max_pitch_degrees)
+		)
+
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	if event.is_action_pressed("attack"):
 		_attack()

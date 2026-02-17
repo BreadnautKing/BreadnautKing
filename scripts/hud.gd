@@ -23,7 +23,7 @@ func _ready() -> void:
 	if main_node and main_node.has_signal("wave_changed"):
 		main_node.wave_changed.connect(_on_wave_changed)
 
-	hint_label.text = "WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"
+	hint_label.text = "3rd person: мышь — обзор камеры | WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"
 
 func _on_player_stats_changed(data: Dictionary) -> void:
 	health_bar.max_value = data.max_health
