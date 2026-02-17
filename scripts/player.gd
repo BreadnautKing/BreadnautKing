@@ -15,12 +15,15 @@ signal stats_changed(data: Dictionary)
 @export var stamina_regen_per_sec: float = 20.0
 @export var sprint_stamina_cost_per_sec: float = 18.0
 @export var attack_stamina_cost: float = 22.0
+@export var medkit_heal_amount: int = 45
 
 var health: int
 var stamina: float
 var level: int = 1
 var current_xp: int = 0
 var xp_to_next_level: int = 100
+var medkits: int = 1
+var scrap: int = 0
 
 var _can_attack: bool = true
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -46,6 +49,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("attack"):
 		_attack()
+
+	if event.is_action_pressed("heal_item"):
+		use_medkit()
 
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -105,6 +111,25 @@ func add_experience(amount: int) -> void:
 
 	_emit_stats_changed()
 
+func add_item(item_id: String, amount: int = 1) -> void:
+	if amount <= 0:
+		return
+
+	match item_id:
+		"medkit":
+			medkits += amount
+		"scrap":
+			scrap += amount
+	_emit_stats_changed()
+
+func use_medkit() -> void:
+	if medkits <= 0 or health >= max_health:
+		return
+
+	medkits -= 1
+	health = min(health + medkit_heal_amount, max_health)
+	_emit_stats_changed()
+
 func _attack() -> void:
 	if not _can_attack or stamina < attack_stamina_cost:
 		return
@@ -129,7 +154,9 @@ func get_stats() -> Dictionary:
 		"max_stamina": max_stamina,
 		"level": level,
 		"xp": current_xp,
-		"xp_to_next": xp_to_next_level
+		"xp_to_next": xp_to_next_level,
+		"medkits": medkits,
+		"scrap": scrap
 	}
 
 func _emit_stats_changed() -> void:

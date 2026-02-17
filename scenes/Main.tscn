@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/Zombie.tscn" id="2_zombie"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/hud.gd" id="4_hud"]
 [ext_resource type="PackedScene" path="res://scenes/FastZombie.tscn" id="5_fast_zombie"]
 [ext_resource type="PackedScene" path="res://scenes/TankZombie.tscn" id="6_tank_zombie"]
+[ext_resource type="PackedScene" path="res://scenes/Pickup.tscn" id="7_pickup"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_terrain"]
 size = Vector2(1200, 1200)
@@ -128,6 +129,28 @@ shape = SubResource("BoxShape3D_building")
 mesh = SubResource("BoxMesh_building")
 material_override = SubResource("StandardMaterial3D_building")
 
+[node name="Pickups" type="Node3D" parent="."]
+
+[node name="MedkitSpawnA" parent="Pickups" instance=ExtResource("7_pickup")]
+position = Vector3(74, 0.6, 100)
+item_id = "medkit"
+amount = 1
+
+[node name="MedkitSpawnB" parent="Pickups" instance=ExtResource("7_pickup")]
+position = Vector3(-178, 0.6, 65)
+item_id = "medkit"
+amount = 1
+
+[node name="ScrapSpawnA" parent="Pickups" instance=ExtResource("7_pickup")]
+position = Vector3(160, 0.6, -150)
+item_id = "scrap"
+amount = 3
+
+[node name="ScrapSpawnB" parent="Pickups" instance=ExtResource("7_pickup")]
+position = Vector3(-212, 0.6, -202)
+item_id = "scrap"
+amount = 2
+
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector3(0, 0.5, 0)
 
@@ -153,8 +176,8 @@ script = ExtResource("4_hud")
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/HUD"]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 340.0
-offset_bottom = 200.0
+offset_right = 360.0
+offset_bottom = 260.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD/PanelContainer"]
 theme_override_constants/margin_left = 10
@@ -169,6 +192,12 @@ text = "Level 1"
 
 [node name="WaveLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 text = "Wave 1 | Max zombies: 12"
+
+[node name="MedkitLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+text = "Medkits: 0"
+
+[node name="ScrapLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+text = "Scrap: 0"
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 max_value = 100.0
@@ -211,7 +240,7 @@ text = "XP: 0 / 100"
 
 [node name="Hint" type="Label" parent="CanvasLayer/HUD"]
 offset_left = 16.0
-offset_top = 214.0
+offset_top = 274.0
 offset_right = 1220.0
-offset_bottom = 278.0
-text = "WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар"
+offset_bottom = 340.0
+text = "WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар | F — аптечка"
