@@ -1,23 +1,27 @@
 extends Control
 
 @export var player_path: NodePath = ^"../../Player"
+@export var main_path: NodePath = ^"../.."
 
 @onready var player: CharacterBody3D = get_node_or_null(player_path)
+@onready var main_node: Node = get_node_or_null(main_path)
 @onready var health_bar: ProgressBar = $PanelContainer/MarginContainer/VBoxContainer/HealthBar
 @onready var stamina_bar: ProgressBar = $PanelContainer/MarginContainer/VBoxContainer/StaminaBar
 @onready var xp_bar: ProgressBar = $PanelContainer/MarginContainer/VBoxContainer/XPBar
 @onready var level_label: Label = $PanelContainer/MarginContainer/VBoxContainer/LevelLabel
+@onready var wave_label: Label = $PanelContainer/MarginContainer/VBoxContainer/WaveLabel
 @onready var hint_label: Label = $Hint
 
 func _ready() -> void:
-	if player == null:
-		return
-	if player.has_signal("stats_changed"):
+	if player and player.has_signal("stats_changed"):
 		player.stats_changed.connect(_on_player_stats_changed)
-	if player.has_method("get_stats"):
+	if player and player.has_method("get_stats"):
 		_on_player_stats_changed(player.get_stats())
 
-	hint_label.text = "WASD — движение | Shift — бег (тратит стамину) | Space — прыжок | ЛКМ — удар (тратит стамину)"
+	if main_node and main_node.has_signal("wave_changed"):
+		main_node.wave_changed.connect(_on_wave_changed)
+
+	hint_label.text = "WASD — движение | Shift — бег (стамина) | Space — прыжок | ЛКМ — удар (стамина)"
 
 func _on_player_stats_changed(data: Dictionary) -> void:
 	health_bar.max_value = data.max_health
@@ -33,3 +37,6 @@ func _on_player_stats_changed(data: Dictionary) -> void:
 	xp_bar.get_node("ValueLabel").text = "XP: %d / %d" % [data.xp, data.xp_to_next]
 
 	level_label.text = "Level %d" % data.level
+
+func _on_wave_changed(current_wave: int, max_alive: int) -> void:
+	wave_label.text = "Wave %d | Max zombies: %d" % [current_wave, max_alive]

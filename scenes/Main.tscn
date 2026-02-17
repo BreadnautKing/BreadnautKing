@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/Zombie.tscn" id="2_zombie"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="3_main"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/FastZombie.tscn" id="5_fast_zombie"]
+[ext_resource type="PackedScene" path="res://scenes/TankZombie.tscn" id="6_tank_zombie"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_terrain"]
 size = Vector2(1200, 1200)
@@ -39,7 +41,7 @@ fog_density = 0.0007
 
 [node name="Main" type="Node3D"]
 script = ExtResource("3_main")
-zombie_scene = ExtResource("2_zombie")
+zombie_scenes = Array[PackedScene]([ExtResource("2_zombie"), ExtResource("5_fast_zombie"), ExtResource("6_tank_zombie")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fog")
@@ -134,6 +136,9 @@ position = Vector3(0, 0.5, 0)
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="WaveTimer" type="Timer" parent="."]
+autostart = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" type="Control" parent="CanvasLayer"]
@@ -148,8 +153,8 @@ script = ExtResource("4_hud")
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/HUD"]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 330.0
-offset_bottom = 170.0
+offset_right = 340.0
+offset_bottom = 200.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD/PanelContainer"]
 theme_override_constants/margin_left = 10
@@ -161,6 +166,9 @@ theme_override_constants/margin_bottom = 10
 
 [node name="LevelLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 text = "Level 1"
+
+[node name="WaveLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+text = "Wave 1 | Max zombies: 12"
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 max_value = 100.0
@@ -203,7 +211,7 @@ text = "XP: 0 / 100"
 
 [node name="Hint" type="Label" parent="CanvasLayer/HUD"]
 offset_left = 16.0
-offset_top = 184.0
+offset_top = 214.0
 offset_right = 1220.0
-offset_bottom = 248.0
+offset_bottom = 278.0
 text = "WASD — движение | Shift — бег | Space — прыжок | ЛКМ — удар"
