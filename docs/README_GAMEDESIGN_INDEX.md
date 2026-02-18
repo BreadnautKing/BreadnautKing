@@ -7,3 +7,4 @@
 - `README_MONETIZATION.md` — монетизация
 - `README_LIVEOPS.md` — лайвопс и релизный цикл
 - `README_PRODUCTION.md` — продакшн-ограничения и риски
+- `README_SKILLS_ATTRIBUTES.md` — атрибуты и деревья навыков (RPG)

@@ -60,5 +60,6 @@
 - `scenes/Pickup.tscn` — подбираемые предметы мира
 - `scripts/pickup.gd` — логика подбора предметов
 - `scripts/hud.gd` — обновление HUD (HP/Stamina/XP/Level/Inventory)
+- `docs/README_SKILLS_ATTRIBUTES.md` — система атрибутов и навыков RPG
 
 Откройте проект в Godot 4.x и запустите сцену `Main.tscn`.
