@@ -25,6 +25,7 @@
 ## План разработки
 - Подробный пошаговый план: `ROADMAP.md`
 - Инструкция по загрузке/запуску в движке: `README_ENGINE_IMPORT.md`
+- Пакет геймдизайн-доков: `docs/README_GAMEDESIGN_INDEX.md`
 
 ## Core gameloop readiness
 - Единый статус готовности к большому испытанию: `CORE_LOOP_STATUS.md`
