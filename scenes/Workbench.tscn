@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/workbench.gd" id="1_workbench"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_area"]
+size = Vector3(3.5, 2.0, 3.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_workbench"]
+size = Vector3(2.0, 1.0, 1.0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_workbench"]
+albedo_color = Color(0.65, 0.45, 0.2, 1)
+
+[node name="Workbench" type="Area3D"]
+script = ExtResource("1_workbench")
+collision_layer = 8
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_area")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.5, 0)
+mesh = SubResource("BoxMesh_workbench")
+material_override = SubResource("StandardMaterial3D_workbench")
