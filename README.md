@@ -13,7 +13,7 @@
 - Крафт аптечек у верстака (`E`) за `scrap`.
 - Спавн зомби вокруг игрока и рядом с POI.
 - HUD с HP/Stamina/XP/Level в реальном времени.
-- Волновая система с ростом лимита врагов и интенсивности спавна.
+- Контекстный open-world спавн (без волн): день/ночь, POI и уровень угрозы.
 
 ## Open world foundation
 - Одна большая карта `1200 x 1200` как базовый ландшафт.
@@ -54,7 +54,7 @@
 - `scenes/TankZombie.tscn` — танк-тип зомби
 - `scripts/player.gd` — логика игрока
 - `scripts/zombie.gd` — логика зомби
-- `scripts/main.gd` — логика open world спавна + волны
+- `scripts/main.gd` — логика open world спавна + день/ночь + уровень угрозы
 - `scenes/Workbench.tscn` — верстак для крафта
 - `scripts/workbench.gd` — триггер взаимодействия с верстаком
 - `scenes/Pickup.tscn` — подбираемые предметы мира

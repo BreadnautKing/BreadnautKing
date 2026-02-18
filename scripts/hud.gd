@@ -9,7 +9,7 @@ extends Control
 @onready var stamina_bar: ProgressBar = $PanelContainer/MarginContainer/VBoxContainer/StaminaBar
 @onready var xp_bar: ProgressBar = $PanelContainer/MarginContainer/VBoxContainer/XPBar
 @onready var level_label: Label = $PanelContainer/MarginContainer/VBoxContainer/LevelLabel
-@onready var wave_label: Label = $PanelContainer/MarginContainer/VBoxContainer/WaveLabel
+@onready var world_state_label: Label = $PanelContainer/MarginContainer/VBoxContainer/WorldStateLabel
 @onready var medkit_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MedkitLabel
 @onready var scrap_label: Label = $PanelContainer/MarginContainer/VBoxContainer/ScrapLabel
 @onready var status_label: Label = $PanelContainer/MarginContainer/VBoxContainer/StatusLabel
@@ -21,8 +21,8 @@ func _ready() -> void:
 	if player and player.has_method("get_stats"):
 		_on_player_stats_changed(player.get_stats())
 
-	if main_node and main_node.has_signal("wave_changed"):
-		main_node.wave_changed.connect(_on_wave_changed)
+	if main_node and main_node.has_signal("world_state_changed"):
+		main_node.world_state_changed.connect(_on_world_state_changed)
 
 	hint_label.text = "3rd person: мышь — камера | WASD — движение | Shift — бег | ЛКМ — удар | F — аптечка | E — крафт у верстака"
 
@@ -48,5 +48,5 @@ func _on_player_stats_changed(data: Dictionary) -> void:
 	else:
 		status_label.text = "Статус: в бою"
 
-func _on_wave_changed(current_wave: int, max_alive: int) -> void:
-	wave_label.text = "Wave %d | Max zombies: %d" % [current_wave, max_alive]
+func _on_world_state_changed(phase: String, max_alive: int, threat: float) -> void:
+	world_state_label.text = "%s | Max zombies: %d | Threat: %.1f" % [phase, max_alive, threat]

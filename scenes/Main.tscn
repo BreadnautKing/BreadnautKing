@@ -169,7 +169,7 @@ position = Vector3(0, 0.5, 0)
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="WaveTimer" type="Timer" parent="."]
+[node name="DayNightTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -200,8 +200,8 @@ theme_override_constants/margin_bottom = 10
 [node name="LevelLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 text = "Level 1"
 
-[node name="WaveLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
-text = "Wave 1 | Max zombies: 12"
+[node name="WorldStateLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
+text = "Day | Max zombies: 10 | Threat: 0.0"
 
 [node name="MedkitLabel" type="Label" parent="CanvasLayer/HUD/PanelContainer/MarginContainer/VBoxContainer"]
 text = "Medkits: 0"
